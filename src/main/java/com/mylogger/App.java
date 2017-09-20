@@ -7,6 +7,6 @@ public class App {
     public static final MyLogger logger = LoggerFactory.getLogger(App.class.getName());
 
     public static void main(String[] args) {
-        logger.
+        logger.info("this is a test message.");
     }
 }
