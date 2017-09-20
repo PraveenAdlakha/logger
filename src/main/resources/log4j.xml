@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<log4j>
+
+    <appender name="InfoAppender" class="org.apache.log4j.ConsoleAppender">
+        <param name="Threshold" value="DEBUG"/>
+        <param name="tsFormat" value="dd­mm­yyyy­hh­mm­ss"/>
+        <param name="sinkType" value="FILE"/>
+        <param name="fileLocation" value="/var/log/app/info.log"/>
+        <param name="thread_model" value="SINGLE"/>
+        <param name="writeMode" value="SYNC"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="[%d{dd/MM/yyyy:HH:mm:ss}] (%C{1}:%-L) - %m%n"/>
+        </layout>
+    </appender>
+
+</log4j>
