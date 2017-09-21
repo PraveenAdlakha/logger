@@ -11,12 +11,11 @@ public abstract class DefaultLogger implements ILogger {
   //TODO these map should be immutable or pass copy
   private  Map<LoggingLevel, Sink> levelSinkMap;
 
-  public void DefaultLogger(Map<LoggingLevel, Sink> levelSinkMap, String name){
-    this.name = name;
+  //TODO add dateformatter and append the message to the write data method
+
+  public void DefaultLogger(Map<LoggingLevel, Sink> levelSinkMap){
     this.levelSinkMap = levelSinkMap;
   }
-
-  private  String name;
 
   public DefaultLogger(Map<LoggingLevel, Sink> levelMyLoggerMap) {
     this.levelSinkMap = levelMyLoggerMap;

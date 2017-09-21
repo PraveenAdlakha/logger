@@ -11,4 +11,9 @@ public class SimpleSyncLogger extends DefaultLogger {
   public SimpleSyncLogger(Map<LoggingLevel, Sink> map) {
     super(map);
   }
+
+  @Override
+  public void info(String s) {
+    super.info(s);
+  }
 }
