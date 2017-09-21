@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.mylogger.logger.Sink;
+
 public class FileSink implements Sink {
     private static String FILENAME;
 

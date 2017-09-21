@@ -1,4 +1,4 @@
-package com.mylogger.logger.core;
+package com.mylogger.logger;
 
 public enum LoggingLevel {
     ERROR(3),
