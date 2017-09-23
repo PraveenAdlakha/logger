@@ -21,7 +21,6 @@ public class LogFileParser {
         Document doc = dBuilder.parse(inputFile);
         doc.getDocumentElement().normalize();
         System.out.println("RootElement:" + doc.getDocumentElement().getNodeName());
-
     }
 
 

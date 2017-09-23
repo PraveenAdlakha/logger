@@ -29,16 +29,15 @@ public final class LoggerFactory {
   }
 
   public static ILogger getLogger(String name) {
-    if(null == classLoggerObjectMap || null ==levelSinkMap ){
+    if(null == classLoggerObjectMap || null == levelSinkMap ){
       init();
     }
-    ILogger ILogger;
     if (null != classLoggerObjectMap.get(name)) {
       return classLoggerObjectMap.get(name);
     } else {
       if (isAsync) {
         return classLoggerObjectMap.computeIfAbsent(name,
-            n -> new SimpleSyncLogger(levelSinkMap));
+            n -> new SimpleAsyncLogger(levelSinkMap));
       }
       return classLoggerObjectMap.computeIfAbsent(name, n -> new SimpleSyncLogger(levelSinkMap));
     }

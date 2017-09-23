@@ -7,6 +7,7 @@ public class App {
     public static final ILogger I_LOGGER = LoggerFactory.getLogger(App.class.getName());
 
     public static void main(String[] args) {
-        I_LOGGER.info("this is a test message2.");
+
+        I_LOGGER.info("this is a test message4.");
     }
 }

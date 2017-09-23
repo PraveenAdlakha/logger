@@ -8,6 +8,10 @@ import com.mylogger.logger.Sink;
 
 public abstract class DefaultLogger implements ILogger {
 
+  public Map<LoggingLevel, Sink> getLevelSinkMap() {
+    return levelSinkMap;
+  }
+
   //TODO these map should be immutable or pass copy
   private  Map<LoggingLevel, Sink> levelSinkMap;
 
