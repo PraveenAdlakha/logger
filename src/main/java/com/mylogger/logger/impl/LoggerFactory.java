@@ -26,7 +26,7 @@ public final class LoggerFactory {
   private static Map<LoggingLevel, Sink> levelSinkMap;
 
 
-  private static  void init(){
+  private static void init(){
     properties = PropertiesReader.getPropertiesReader();
     classLoggerObjectMap = new ConcurrentHashMap<String, ILogger>();
     levelSinkMap = new ConcurrentHashMap<LoggingLevel, Sink>();

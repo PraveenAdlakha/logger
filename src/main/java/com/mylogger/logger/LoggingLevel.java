@@ -1,6 +1,8 @@
 package com.mylogger.logger;
 
 public enum LoggingLevel {
+    WARN(5),
+    FATAL(4),
     ERROR(3),
     DEBUG(2),
     INFO(1);
