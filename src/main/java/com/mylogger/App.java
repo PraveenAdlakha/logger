@@ -8,6 +8,8 @@ public class App {
 
     public static void main(String[] args) {
 
-        I_LOGGER.info("this is a test message4.");
+        I_LOGGER.info("this is a test message6.");
+        I_LOGGER.error("this is a test message6.");
+        I_LOGGER.debug("this is a test message6.");
     }
 }

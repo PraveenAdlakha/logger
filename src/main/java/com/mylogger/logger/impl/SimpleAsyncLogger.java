@@ -28,13 +28,13 @@ public class SimpleAsyncLogger extends DefaultLogger {
 
     @Override
     public void debug(String s){
-        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.INFO, s);
+        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.DEBUG, s);
         queue.add(logMessage);
     }
 
     @Override
     public void error(String s){
-        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.INFO, s);
+        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.ERROR, s);
         queue.add(logMessage);
     }
 

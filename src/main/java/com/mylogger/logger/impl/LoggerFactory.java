@@ -1,6 +1,7 @@
 package com.mylogger.logger.impl;
 
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.mylogger.logger.ILogger;
@@ -15,17 +16,29 @@ public final class LoggerFactory {
 
   private static int IsInitialized;
   private static boolean isAsync;
+  private static String logFilePath;
+  private static Properties propertiesReader;
+  public static final String file_location = new String("file_location");
 
   private static Map<String, ILogger> classLoggerObjectMap;
   private static Map<LoggingLevel, Sink> levelSinkMap;
 
 
   private static  void init(){
+    propertiesReader = PropertiesReader.getPropertiesReader();
     classLoggerObjectMap = new ConcurrentHashMap<String, ILogger>();
     levelSinkMap = new ConcurrentHashMap<LoggingLevel, Sink>();
-    //TODO remove this and fill it through sml parser
-    levelSinkMap.put(LoggingLevel.INFO, FileSink.getFileSink());
-    isAsync = true;
+    logFilePath = new String(propertiesReader.getProperty(file_location));
+    //TODO remove this and fill it through properties file
+    levelSinkMap.put(LoggingLevel.INFO, FileSink.getFileSink(logFilePath));
+    levelSinkMap.put(LoggingLevel.ERROR, FileSink.getFileSink(logFilePath));
+    levelSinkMap.putIfAbsent(LoggingLevel.DEBUG, FileSink.getFileSink(logFilePath));
+    if(propertiesReader.getProperty("write_mode") == "ASYNC"){
+      isAsync = true;
+    }else {
+      isAsync = false;
+    }
+
   }
 
   public static ILogger getLogger(String name) {

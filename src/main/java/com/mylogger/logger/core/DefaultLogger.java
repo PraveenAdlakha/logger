@@ -1,10 +1,13 @@
 package com.mylogger.logger.core;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
+import java.util.Properties;
 
 import com.mylogger.logger.ILogger;
 import com.mylogger.logger.LoggingLevel;
 import com.mylogger.logger.Sink;
+import com.mylogger.logger.impl.PropertiesReader;
 
 public abstract class DefaultLogger implements ILogger {
 
@@ -14,15 +17,14 @@ public abstract class DefaultLogger implements ILogger {
 
   //TODO these map should be immutable or pass copy
   private  Map<LoggingLevel, Sink> levelSinkMap;
+  private SimpleDateFormat sdf ;
 
   //TODO add dateformatter and append the message to the write data method
 
-  public void DefaultLogger(Map<LoggingLevel, Sink> levelSinkMap){
-    this.levelSinkMap = levelSinkMap;
-  }
-
   public DefaultLogger(Map<LoggingLevel, Sink> levelMyLoggerMap) {
     this.levelSinkMap = levelMyLoggerMap;
+    Properties properties = PropertiesReader.getPropertiesReader();
+    sdf = new SimpleDateFormat(properties.getProperty("ts_format"));
   }
 
   @Override
@@ -43,6 +45,9 @@ public abstract class DefaultLogger implements ILogger {
   }
 
   private synchronized void log(LoggingLevel level, String message) {
-    getSinkMap().get(level).writeData(message);
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(sdf.format(System.currentTimeMillis())).append(" ")
+            .append(level.name()).append(" ").append(message);
+    getSinkMap().get(level).writeData(stringBuilder.toString());
   }
 }

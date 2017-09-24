@@ -16,9 +16,9 @@ public class FileSink implements Sink {
         FILENAME = path;
     }
 
-    public static synchronized FileSink getFileSink(){
+    public static synchronized FileSink getFileSink(String path){
         if(fileSink == null){
-            fileSink = new FileSink("/tmp/test.txt");
+            fileSink = new FileSink(path);
         }
         return fileSink;
     }
