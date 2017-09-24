@@ -6,6 +6,7 @@ public class MyLogMessage {
 
     private LoggingLevel loggingLevel;
     private String msg;
+    private String name;
 
     public LoggingLevel getLoggingLevel() {
         return loggingLevel;
@@ -15,8 +16,9 @@ public class MyLogMessage {
         return msg;
     }
 
-    public MyLogMessage(LoggingLevel loggingLevel, String msg){
+    public MyLogMessage(LoggingLevel loggingLevel, String msg, String name){
         this.loggingLevel = loggingLevel;
         this.msg = msg;
+        this.name = name;
     }
 }

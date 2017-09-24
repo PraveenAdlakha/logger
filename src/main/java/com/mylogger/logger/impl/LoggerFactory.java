@@ -9,6 +9,8 @@ import com.mylogger.logger.Sink;
 import com.mylogger.logger.LoggingLevel;
 import com.mylogger.logger.sinks.FileSink;
 
+import static com.mylogger.logger.Constants.*;
+
 public final class LoggerFactory {
   //1.TODO parse the xml file and instatiate the map for Logging LEVEL and p
   //pass that map to the simpleLoggerSync instance and rest of them
@@ -17,7 +19,7 @@ public final class LoggerFactory {
   private static int IsInitialized;
   private static boolean isAsync;
   private static String logFilePath;
-  private static Properties propertiesReader;
+  private static Properties properties;
   public static final String file_location = new String("file_location");
 
   private static Map<String, ILogger> classLoggerObjectMap;
@@ -25,17 +27,23 @@ public final class LoggerFactory {
 
 
   private static  void init(){
-    propertiesReader = PropertiesReader.getPropertiesReader();
+    properties = PropertiesReader.getPropertiesReader();
     classLoggerObjectMap = new ConcurrentHashMap<String, ILogger>();
     levelSinkMap = new ConcurrentHashMap<LoggingLevel, Sink>();
-    logFilePath = new String(propertiesReader.getProperty(file_location));
+    logFilePath = new String(properties.getProperty(file_location));
     //TODO remove this and fill it through properties file
-    levelSinkMap.put(LoggingLevel.INFO, FileSink.getFileSink(logFilePath));
-    levelSinkMap.put(LoggingLevel.ERROR, FileSink.getFileSink(logFilePath));
-    levelSinkMap.putIfAbsent(LoggingLevel.DEBUG, FileSink.getFileSink(logFilePath));
-    if(propertiesReader.getProperty("write_mode") == "ASYNC"){
+    if (properties.getProperty(INFOSINKTYPE).equals(FILE)){
+      levelSinkMap.put(LoggingLevel.INFO, FileSink.getSink());
+    }
+    if (properties.getProperty(ERRORSINKTYPE).equals(FILE)){
+      levelSinkMap.put(LoggingLevel.ERROR, FileSink.getSink());
+    }
+    if (properties.getProperty(DEBUGSINKTYPE).equals(FILE)){
+      levelSinkMap.putIfAbsent(LoggingLevel.DEBUG, FileSink.getSink());
+    }
+    if(properties.getProperty(WRITEMODE) == ASYNC){
       isAsync = true;
-    }else {
+    } else {
       isAsync = false;
     }
 
@@ -50,9 +58,9 @@ public final class LoggerFactory {
     } else {
       if (isAsync) {
         return classLoggerObjectMap.computeIfAbsent(name,
-            n -> new SimpleAsyncLogger(levelSinkMap));
+            n -> new SimpleAsyncLogger(levelSinkMap, name));
       }
-      return classLoggerObjectMap.computeIfAbsent(name, n -> new SimpleSyncLogger(levelSinkMap));
+      return classLoggerObjectMap.computeIfAbsent(name, n -> new SimpleSyncLogger(levelSinkMap, name));
     }
   }
 }

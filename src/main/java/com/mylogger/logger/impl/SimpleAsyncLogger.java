@@ -14,27 +14,27 @@ public class SimpleAsyncLogger extends DefaultLogger {
     private BlockingQueue<MyLogMessage> queue =  new LinkedBlockingQueue<>();
 
 
-    public SimpleAsyncLogger(Map<LoggingLevel, Sink> map){
-        super(map);
+    public SimpleAsyncLogger(Map<LoggingLevel, Sink> map, String name){
+        super(map, name);
         Thread infoThread = new Thread(new MyLogWriter(getLevelSinkMap(), queue));
         infoThread.start();
     }
 
     @Override
     public void info(String s){
-        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.INFO, s);
+        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.INFO, s, name);
         queue.add(logMessage);
     }
 
     @Override
     public void debug(String s){
-        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.DEBUG, s);
+        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.DEBUG, s, name);
         queue.add(logMessage);
     }
 
     @Override
     public void error(String s){
-        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.ERROR, s);
+        MyLogMessage logMessage = new MyLogMessage(LoggingLevel.ERROR, s, name);
         queue.add(logMessage);
     }
 
@@ -45,8 +45,9 @@ class MyLogWriter implements Runnable {
     SimpleSyncLogger sink;
     BlockingQueue queue;
 
-    public MyLogWriter(Map<LoggingLevel, Sink> levelSinkMap, BlockingQueue<MyLogMessage> queue){
-        sink = new SimpleSyncLogger(levelSinkMap);
+    public MyLogWriter(Map<LoggingLevel, Sink> levelSinkMap,
+                       BlockingQueue<MyLogMessage> queue){
+        sink = new SimpleSyncLogger(levelSinkMap, "thread");
         this.queue = queue;
     }
 

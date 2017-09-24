@@ -9,6 +9,8 @@ import com.mylogger.logger.LoggingLevel;
 import com.mylogger.logger.Sink;
 import com.mylogger.logger.impl.PropertiesReader;
 
+import static com.mylogger.logger.Constants.TSFORMAT;
+
 public abstract class DefaultLogger implements ILogger {
 
   public Map<LoggingLevel, Sink> getLevelSinkMap() {
@@ -18,13 +20,15 @@ public abstract class DefaultLogger implements ILogger {
   //TODO these map should be immutable or pass copy
   private  Map<LoggingLevel, Sink> levelSinkMap;
   private SimpleDateFormat sdf ;
+  public String name;
 
   //TODO add dateformatter and append the message to the write data method
 
-  public DefaultLogger(Map<LoggingLevel, Sink> levelMyLoggerMap) {
+  public DefaultLogger(Map<LoggingLevel, Sink> levelMyLoggerMap, String name) {
     this.levelSinkMap = levelMyLoggerMap;
+    this.name = name;
     Properties properties = PropertiesReader.getPropertiesReader();
-    sdf = new SimpleDateFormat(properties.getProperty("ts_format"));
+    sdf = new SimpleDateFormat(properties.getProperty(TSFORMAT));
   }
 
   @Override
@@ -33,21 +37,21 @@ public abstract class DefaultLogger implements ILogger {
   }
 
   public void debug(String s) {
-    log(LoggingLevel.DEBUG, s);
+    log(LoggingLevel.DEBUG, s, name);
   }
 
   public void info(String s) {
-    log(LoggingLevel.INFO, s);
+    log(LoggingLevel.INFO, s, name);
   }
 
   public void error(String s) {
-    log(LoggingLevel.ERROR, s);
+    log(LoggingLevel.ERROR, s, name);
   }
 
-  private synchronized void log(LoggingLevel level, String message) {
+  private synchronized void log(LoggingLevel level, String message, String name) {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(sdf.format(System.currentTimeMillis())).append(" ")
-            .append(level.name()).append(" ").append(message);
+            .append(name).append(" ").append(level.name()).append(" ").append(message);
     getSinkMap().get(level).writeData(stringBuilder.toString());
   }
 }

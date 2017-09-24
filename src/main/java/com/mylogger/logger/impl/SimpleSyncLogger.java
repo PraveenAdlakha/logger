@@ -7,9 +7,10 @@ import com.mylogger.logger.Sink;
 import com.mylogger.logger.core.DefaultLogger;
 
 public class SimpleSyncLogger extends DefaultLogger {
+  private String className;
 
-  public SimpleSyncLogger(Map<LoggingLevel, Sink> map) {
-    super(map);
+  public SimpleSyncLogger(Map<LoggingLevel, Sink> map,String name) {
+    super(map, name);
   }
 
   @Override

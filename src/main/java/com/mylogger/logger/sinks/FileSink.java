@@ -4,21 +4,29 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Properties;
 
 import com.mylogger.logger.Sink;
+import com.mylogger.logger.impl.PropertiesReader;
+
+import static com.mylogger.logger.Constants.FILELOCATION;
 
 public class FileSink implements Sink {
     private static String FILENAME;
 
     private static FileSink fileSink;
 
+    private static Properties properties ;
+
     private FileSink(String path){
         FILENAME = path;
     }
 
-    public static synchronized FileSink getFileSink(String path){
+
+    public static synchronized FileSink getSink(){
+        properties = PropertiesReader.getPropertiesReader();
         if(fileSink == null){
-            fileSink = new FileSink(path);
+            fileSink = new FileSink(properties.getProperty(FILELOCATION));
         }
         return fileSink;
     }
@@ -44,7 +52,7 @@ public class FileSink implements Sink {
 
             bw.write(data);
 
-            System.out.println("Done");
+            //System.out.println("Done");
 
         } catch (IOException e) {
 
