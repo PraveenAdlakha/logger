@@ -8,6 +8,7 @@ import com.mylogger.logger.ILogger;
 import com.mylogger.logger.Sink;
 import com.mylogger.logger.LoggingLevel;
 import com.mylogger.logger.sinks.FileSink;
+import com.mylogger.logger.sinks.MemorySink;
 
 import static com.mylogger.logger.Constants.*;
 
@@ -40,6 +41,9 @@ public final class LoggerFactory {
     }
     if (properties.getProperty(DEBUGSINKTYPE).equals(FILE)){
       levelSinkMap.putIfAbsent(LoggingLevel.DEBUG, FileSink.getSink());
+    }
+    if(properties.getProperty(WARNSINKTYPE).equals(MEMORY)){
+      levelSinkMap.putIfAbsent(LoggingLevel.WARN, new MemorySink());
     }
     if(properties.getProperty(WRITEMODE) == ASYNC){
       isAsync = true;

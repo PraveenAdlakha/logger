@@ -19,12 +19,7 @@ public class LoggerFactoryTests {
         Assert.assertEquals(logger.getSinkMap().size(), 3);
     }
 
-    @Test
-    public void getPropertyReader(){
-        Properties reader = PropertiesReader.getPropertiesReader();
-        System.out.println(reader);
-        Assert.assertEquals(reader.getProperty(TSFORMAT),"yyyy-MM-dd HH:mm");
-    }
+
 
 
 }

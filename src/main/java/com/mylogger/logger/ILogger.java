@@ -10,5 +10,7 @@ public interface ILogger {
 
   public void error(String s);
 
+  public void warn(String s);
+
   public Map<LoggingLevel, Sink> getSinkMap();
 }

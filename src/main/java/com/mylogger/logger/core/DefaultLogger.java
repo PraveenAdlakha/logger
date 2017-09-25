@@ -48,6 +48,8 @@ public abstract class DefaultLogger implements ILogger {
     log(LoggingLevel.ERROR, s, name);
   }
 
+  public void warn(String s){log(LoggingLevel.WARN, s, name);}
+
   private synchronized void log(LoggingLevel level, String message, String name) {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(sdf.format(System.currentTimeMillis())).append(" ")

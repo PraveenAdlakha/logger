@@ -9,4 +9,6 @@ public class Constants {
     public static final String ERRORSINKTYPE = "error_sink_type";
     public static final String DEBUGSINKTYPE = "debug_sink_type";
     public static final String TSFORMAT = "ts_format";
+    public static final String WARNSINKTYPE = "warn_sink_type";
+    public static final String MEMORY = "MEMORY";
 }
